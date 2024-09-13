@@ -33,14 +33,27 @@ export async function POST(request: Request) {
 
 export async function GET() {
   try {
-    // Buscar todos os lances do banco de dados
-    const bids = await prisma.bid.findMany({
+    // Obter o último lance (mais recente)
+    const latestBid = await prisma.bid.findFirst({
       orderBy: {
         timestamp: "desc", // Ordenar pelos mais recentes primeiro
       },
     });
 
-    return NextResponse.json(bids, { status: 200 });
+    // Obter o lance com o valor mais alto
+    const highestBid = await prisma.bid.findFirst({
+      orderBy: {
+        amount: "desc", // Ordenar pelos valores mais altos primeiro
+      },
+    });
+
+    return NextResponse.json(
+      {
+        latestBid,
+        highestBid,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching bids:", error);
     return NextResponse.json(

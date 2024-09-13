@@ -1,0 +1,38 @@
+// components/MoneyInput.tsx
+
+import React from "react";
+import InputMask from "react-input-mask";
+
+interface MoneyInputProps {
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  className?: string;
+  required?: boolean;
+}
+
+const MoneyInput: React.FC<MoneyInputProps> = ({
+  value,
+  onChange,
+  placeholder = "0,00",
+  className = "",
+  required = false,
+}) => {
+  const currencyMask = "999.999.999,99"; // Corrigido para um formato numérico
+
+  return (
+    <InputMask
+      mask={currencyMask}
+      maskChar={null}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      className={`border p-2 rounded-md text-black ${className}`}
+      required={required}
+    >
+      {(inputProps: any) => <input {...inputProps} />}
+    </InputMask>
+  );
+};
+
+export default MoneyInput;
