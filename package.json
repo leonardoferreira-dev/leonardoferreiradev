@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "18.x",
-    "npm": "10.x"
+    "yarn": "1.x"
   },
   "scripts": {
     "dev": "next dev",
