@@ -1,0 +1,7 @@
+model Bid {
+  id        Int      @id @default(autoincrement())
+  name      String
+  contact   String
+  amount    Float
+  timestamp DateTime
+}
