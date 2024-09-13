@@ -24,7 +24,7 @@ function AuctionPage() {
   const [contact, setContact] = useState<string>("");
   const [amount, setAmount] = useState<string>("");
   const [latestBid, setLatestBid] = useState<Bid | null>(null);
-  const [highestBid, setHighestBid] = useState<Bid | null>({});
+  const [highestBid, setHighestBid] = useState<Bid | null>(null);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const auctionEndDate = new Date("2024-09-30T23:59:59");
