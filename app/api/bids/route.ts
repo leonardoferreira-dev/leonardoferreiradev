@@ -30,3 +30,22 @@ export async function POST(request: Request) {
     );
   }
 }
+
+export async function GET() {
+  try {
+    // Buscar todos os lances do banco de dados
+    const bids = await prisma.bid.findMany({
+      orderBy: {
+        timestamp: "desc", // Ordenar pelos mais recentes primeiro
+      },
+    });
+
+    return NextResponse.json(bids, { status: 200 });
+  } catch (error) {
+    console.error("Error fetching bids:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch bids" },
+      { status: 500 }
+    );
+  }
+}

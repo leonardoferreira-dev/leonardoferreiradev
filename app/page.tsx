@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import imageBezerra from "@/images/bezerra.png";
 
@@ -44,6 +44,21 @@ function AuctionPage() {
       setAmount("");
     }
   };
+
+  useEffect(() => {
+    async function fetchBids() {
+      try {
+        const response = await fetch("/api/bids");
+        if (!response.ok) {
+          throw new Error("Failed to fetch bids");
+        }
+        const data = await response.json();
+        setBids(data);
+      } catch (error) {}
+    }
+
+    fetchBids();
+  }, []);
 
   const isAuctionOver = new Date() > auctionEndDate;
 
