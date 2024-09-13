@@ -54,7 +54,9 @@ function AuctionPage() {
         }
         const data = await response.json();
         setBids(data);
-      } catch (error) {}
+      } catch (error) {
+        console.log("Error", error);
+      }
     }
 
     fetchBids();
