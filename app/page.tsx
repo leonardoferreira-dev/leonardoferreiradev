@@ -8,7 +8,7 @@ import { useState, FormEvent, useEffect } from "react";
 import Image from "next/image";
 import InputMask from "react-input-mask";
 import { format } from "date-fns";
-import ptBR from "date-fns/locale/pt-BR";
+import { ptBR } from "date-fns/locale/pt-BR";
 
 import Slider from "react-slick";
 
