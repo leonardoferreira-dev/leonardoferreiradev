@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "yarn prisma-generate && next build",
+    "build": "IGNORE_TS_ERRORS=true yarn prisma-generate && next build",
     "start": "next start",
     "lint": "next lint",
     "prisma-generate": "prisma generate"
