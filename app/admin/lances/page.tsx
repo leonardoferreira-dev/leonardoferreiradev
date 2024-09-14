@@ -14,14 +14,16 @@ interface Bid {
 
 export default function LancesPage() {
   const [bids, setBids] = useState<Bid[]>([]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
 
   const router = useRouter();
 
   useEffect(() => {
     // Verifica se o usuário está autenticado
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const isLoggedInStatus = localStorage.getItem("isLoggedIn") === "true";
+    setIsLoggedIn(isLoggedInStatus);
 
-    if (isLoggedIn !== "true") {
+    if (!isLoggedInStatus) {
       // Redireciona para a página de administração se não estiver autenticado
       router.push("/admin");
       return;
@@ -45,14 +47,17 @@ export default function LancesPage() {
     return `https://wa.me/${phoneNumber}`;
   }
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  if (isLoggedIn === null) {
+    // Render a loading state or a placeholder while checking authentication status
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
       className="flex flex-col items-center p-8 min-h-screen text-black"
       style={{ background: "#F2F7FA" }}
     >
-      {isLoggedIn === "true" && (
+      {isLoggedIn && (
         <div className="flex flex-col bg-white rounded-2xl shadow-sm mt-8 w-full max-w-sm">
           <div
             className="w-full h-12 justify-center flex items-center rounded-t-2xl shadow-sm"
