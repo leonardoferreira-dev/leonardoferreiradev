@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     // Obter todos os lances ordenados por data mais recente
     const bids = await prisma.bid.findMany({
