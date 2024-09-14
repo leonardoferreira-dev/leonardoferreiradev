@@ -188,7 +188,7 @@ function AuctionPage() {
         </div>
 
         {!isAuctionOver ? (
-          <form onSubmit={handleBidSubmit} className="mt-6 w-full p-4">
+          <form onSubmit={handleBidSubmit} className="w-full p-4">
             <div className="flex flex-col w-full">
               <div className="flex flex-col w-full">
                 <span className="text-black">Nome</span>
