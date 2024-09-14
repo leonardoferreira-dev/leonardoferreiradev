@@ -34,6 +34,7 @@ function AuctionPage() {
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   const auctionEndDate = new Date("2024-09-30T23:59:59");
+  const minimumBid = 1600; // Defina o valor mínimo aqui
 
   const toPrice = (
     val: string | number | null = null,
@@ -52,6 +53,55 @@ function AuctionPage() {
     }).format(Number(val));
   };
 
+  // const handleBidSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   const newErrors: { [key: string]: string } = {};
+
+  //   // Validação dos campos
+  //   if (!name) newErrors.name = "O nome é obrigatório.";
+  //   if (!contact) newErrors.contact = "O contato é obrigatório.";
+  //   if (!amount) newErrors.amount = "O valor do lance é obrigatório.";
+  //   if (
+  //     highestBid &&
+  //     parseFloat(amount.replace(",", ".")) <= parseFloat(highestBid.amount)
+  //   )
+  //     newErrors.amount = `O lance deve ser maior que R$ ${toPrice(
+  //       highestBid.amount
+  //     )}`;
+
+  //   setErrors(newErrors);
+
+  //   if (Object.keys(newErrors).length > 0) return;
+
+  //   if (Number(amount) < minimumBid)
+  //     newErrors.amount = `O lance deve ser maior ou igual a R$ ${toPrice(
+  //       minimumBid
+  //     )}`;
+
+  //   const formattedAmount = amount.replace(",", ".");
+
+  //   const newBid: Bid = {
+  //     name,
+  //     contact,
+  //     amount: formattedAmount,
+  //     timestamp: new Date(),
+  //   };
+
+  //   await fetch("/api/bids", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(newBid),
+  //   });
+
+  //   await fetchBids();
+  //   setName("");
+  //   setContact("");
+  //   setAmount("");
+  //   setErrors({});
+  // };
+
   const handleBidSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newErrors: { [key: string]: string } = {};
@@ -60,10 +110,15 @@ function AuctionPage() {
     if (!name) newErrors.name = "O nome é obrigatório.";
     if (!contact) newErrors.contact = "O contato é obrigatório.";
     if (!amount) newErrors.amount = "O valor do lance é obrigatório.";
-    if (
-      highestBid &&
-      parseFloat(amount.replace(",", ".")) <= parseFloat(highestBid.amount)
-    )
+
+    const formattedAmount = parseFloat(amount.replace(",", "."));
+
+    if (formattedAmount < minimumBid)
+      newErrors.amount = `O lance deve ser maior ou igual a R$ ${toPrice(
+        minimumBid
+      )}`;
+
+    if (highestBid && formattedAmount <= parseFloat(highestBid.amount))
       newErrors.amount = `O lance deve ser maior que R$ ${toPrice(
         highestBid.amount
       )}`;
@@ -72,12 +127,10 @@ function AuctionPage() {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    const formattedAmount = amount.replace(",", ".");
-
     const newBid: Bid = {
       name,
       contact,
-      amount: formattedAmount,
+      amount: formattedAmount.toString(),
       timestamp: new Date(),
     };
 
@@ -130,7 +183,10 @@ function AuctionPage() {
       className="flex flex-col items-center p-8 min-h-screen"
       style={{ background: "#F2F7FA" }}
     >
-      <h1 className="text-4xl text-black font-bold mb-8">Leilão de Bezerra</h1>
+      <h1 className="text-4xl text-black font-bold">Leilão de Bezerra</h1>
+      <h2 className="text-xl text-black font-medium mb-8">
+        Aproximadamente 10 arrobas
+      </h2>
 
       {/* Carrossel de imagens e vídeo */}
       <div className="w-full max-w-lg mb-8 min-h-[300px]">
@@ -252,7 +308,8 @@ function AuctionPage() {
                 </InputMask>
 
                 <p className="text-red-500 mb-4">
-                  O lance mínimo é de R$ {toPrice(highestBid?.amount) || "0,00"}
+                  O lance mínimo é de R${" "}
+                  {toPrice(highestBid?.amount) || "1600,00"}
                 </p>
               </div>
               <button
