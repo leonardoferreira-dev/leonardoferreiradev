@@ -19,25 +19,33 @@ export default function LancesPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Verifica se o usuário está autenticado
-    const isLoggedInStatus = localStorage.getItem("isLoggedIn") === "true";
-    setIsLoggedIn(isLoggedInStatus);
+    const checkAuthentication = async () => {
+      try {
+        // Verifica se o usuário está autenticado
+        const isLoggedInStatus = localStorage.getItem("isLoggedIn") === "true";
+        setIsLoggedIn(isLoggedInStatus);
 
-    if (!isLoggedInStatus) {
-      // Redireciona para a página de administração se não estiver autenticado
-      router.push("/admin");
-      return;
-    }
+        if (!isLoggedInStatus) {
+          // Redireciona para a página de administração se não estiver autenticado
+          router.push("/admin");
+          return;
+        }
 
-    // Fetch dos lances se estiver autenticado
-    fetch(`/api/lances`)
-      .then((response) => response.json())
-      .then((data) => {
+        // Fetch dos lances se estiver autenticado
+        const response = await fetch(`/api/lances`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        console.log("data", data);
         setBids(data.data);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching bids:", error);
-      });
+      }
+    };
+
+    checkAuthentication();
   }, [router]);
 
   function formatPhoneNumber(phone: string): string {
