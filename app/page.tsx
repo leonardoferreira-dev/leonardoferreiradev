@@ -4,9 +4,15 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import { useState, FormEvent, useEffect } from "react";
+import {
+  useState,
+  FormEvent,
+  useEffect,
+  InputHTMLAttributes,
+  ReactElement,
+} from "react";
 import Image from "next/image";
-import InputMask from "react-input-mask";
+import InputMask, { Props } from "react-input-mask";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
 
@@ -206,7 +212,7 @@ function AuctionPage() {
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                 >
-                  {(inputProps: any) => {
+                  {(inputProps: Props) => {
                     return (
                       <input
                         {...inputProps}
@@ -231,7 +237,7 @@ function AuctionPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                 >
-                  {(inputProps: any) => {
+                  {(inputProps: Props<HTMLInputElement>) => {
                     return (
                       <input
                         {...inputProps}
