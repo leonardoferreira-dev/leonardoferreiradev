@@ -29,7 +29,15 @@ function AuctionPage() {
 
   const auctionEndDate = new Date("2024-09-30T23:59:59");
 
-  const toPrice = (val = null, minimum = null, maximum = null) => {
+  const toPrice = (
+    val: string | number | null = null,
+    minimum: number | null = null,
+    maximum: number | null = null
+  ) => {
+    if (val === null || val === undefined || isNaN(Number(val))) {
+      return "0,00"; // Retorne um valor padrão caso `val` não seja válido
+    }
+
     const min = minimum || minimum === 0 ? minimum : 2;
 
     return new Intl.NumberFormat("pt-BR", {
