@@ -212,19 +212,18 @@ function AuctionPage() {
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                 >
-                  {(inputProps: Props) => {
-                    return (
-                      <input
-                        {...inputProps}
-                        type="text"
-                        placeholder=""
-                        className={`border p-2 mb-4 text-black  bg-slate-200 ${
-                          errors.contact ? "border-red-500" : ""
-                        }`}
-                        required
-                      />
-                    );
-                  }}
+                  {/* @ts-ignore */}
+                  {(inputProps) => (
+                    <input
+                      {...inputProps}
+                      type="text"
+                      placeholder=""
+                      className={`border p-2 mb-4 text-black  bg-slate-200 ${
+                        errors.contact ? "border-red-500" : ""
+                      }`}
+                      required
+                    />
+                  )}
                 </InputMask>
                 {errors.contact && (
                   <p className="text-red-500">{errors.contact}</p>
@@ -237,20 +236,19 @@ function AuctionPage() {
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
                 >
-                  {(inputProps: Props<HTMLInputElement>) => {
-                    return (
-                      <input
-                        {...inputProps}
-                        type="text"
-                        placeholder=""
-                        className={`border p-2 mb-4 bg-slate-200 text-black ${
-                          errors.amount ? "border-red-500" : ""
-                        }`}
-                        dir="rtl"
-                        required
-                      />
-                    );
-                  }}
+                  {/* @ts-ignore */}
+                  {(inputProps) => (
+                    <input
+                      {...inputProps}
+                      type="text"
+                      placeholder=""
+                      className={`border p-2 mb-4 bg-slate-200 text-black ${
+                        errors.amount ? "border-red-500" : ""
+                      }`}
+                      dir="rtl"
+                      required
+                    />
+                  )}
                 </InputMask>
 
                 <p className="text-red-500 mb-4">
